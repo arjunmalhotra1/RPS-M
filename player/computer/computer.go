@@ -11,7 +11,6 @@ type ComputerPlayer struct {
 	PrevBattleResult string
 	prevHumanMove    game.Move
 	prevMove         game.Move
-	//currGame *game
 }
 
 func (p *ComputerPlayer) GetName() string {
@@ -41,9 +40,7 @@ func (p *ComputerPlayer) GetPrevBattleResult() string {
 	return p.PrevBattleResult
 }
 
-/*
-Therefore, this is the best way to win at rock-paper-scissors: if you lose the first round, switch to the thing that beats the thing your opponent just played. If you win, don't keep playing the same thing, but instead switch to the thing that would beat the thing that you just played. In other words, play the hand your losing opponent just played. To wit: you win a round with rock against someone else's scissors. They are about to switch to paper. You should switch to scissors. Got it? Good.
-*/
+// GetNextMove() returns the next move of the ComputerPlayer
 func (p *ComputerPlayer) GetNextMove() game.Move {
 	switch p.GetPrevBattleResult() {
 	case "win":

@@ -4,20 +4,17 @@ import "slices"
 
 type Move string
 
+const WinningScore int = 7
+
 const (
 	Rock     Move = "rock"
 	Paper    Move = "paper"
 	Scissors Move = "scissors"
-	//Draw     Move = "draw"
 )
 
 type Game struct {
 	HumanPlayerScore    int
 	ComputerPlayerScore int
-	// HumanPreviousMove    Move
-	// ComputerPreviousMove Move
-	// h HumanPlayer
-	// c computerPlayer
 }
 
 type Play struct {
@@ -25,20 +22,13 @@ type Play struct {
 	Move Move
 }
 
-// func (g Game) GetHumanPreviousMove() Move {
-// 	return g.HumanPreviousMove
-// }
-
-// func (g Game) GetComputerPreviousMove() Move {
-// 	return g.ComputerPreviousMove
-// }
-
 var ValidMoves = []string{string(Rock), string(Paper), string(Scissors)}
 
 func ValidateMove(m string) bool {
 	return slices.Contains(ValidMoves, m)
 }
 
+// BeatMove returns the move that beats the 'm' input move.
 func BeatMove(m Move) Move {
 	switch m {
 	case Rock:
@@ -52,35 +42,16 @@ func BeatMove(m Move) Move {
 	}
 }
 
-// winnerIs determines the name of the winning player, given each player's Move. In the case of a tie, an empty string
+// WinnerIs determines the name of the winning player, given each player's Move. In the case of a tie, an empty string
 // is returned.
 func WinnerIs(play1, play2 Play) string {
 	if play1.Move == play2.Move {
 		return "draw"
 	}
 
-	switch play1.Move {
-	case "rock":
-		switch play2.Move {
-		case "paper":
-			return play2.Name
-		case "scissors":
-			return play1.Name
-		}
-	case "paper":
-		switch play2.Move {
-		case "scissors":
-			return play2.Name
-		case "rock":
-			return play1.Name
-		}
-	case "scissors":
-		switch play2.Move {
-		case "rock":
-			return play2.Name
-		case "paper":
-			return play1.Name
-		}
+	if BeatMove(play1.Move) == play2.Move {
+		return play2.Name
 	}
-	return "draw"
+
+	return play1.Name
 }

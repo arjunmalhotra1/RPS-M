@@ -1,0 +1,5 @@
+package computer
+
+func TestGetNextMove() {
+
+}

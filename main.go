@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"rock-paper-scissors/game"
-	"rock-paper-scissors/player"
 	"rock-paper-scissors/player/computer"
 	"rock-paper-scissors/player/human"
 )
@@ -13,7 +12,7 @@ import (
 func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Print("Let's play Rock, Paper, Scissors. What is your name?\n> ")
+	fmt.Printf("Let's play Rock, Paper, Scissors. This is a %d play series. What is your name?\n> ", game.WinningScore)
 	scanner.Scan()
 	playerName := scanner.Text()
 
@@ -22,7 +21,7 @@ func main() {
 		ComputerPlayerScore: 0,
 	}
 
-	var humanPlayer player.Player = &human.HumanPlayer{
+	var humanPlayer = &human.HumanPlayer{
 		Name:    playerName,
 		Scanner: scanner,
 	}
@@ -64,5 +63,13 @@ func main() {
 		computerPlayer.SetPrevHumanMove(humanPlayerPlay.Move)
 		computerPlayer.SetPrevMove(computerPlayerPlay.Move)
 
+		if currentGame.ComputerPlayerScore == game.WinningScore || currentGame.HumanPlayerScore == game.WinningScore {
+			if currentGame.ComputerPlayerScore == game.WinningScore {
+				fmt.Println("Sorry, you lost the series")
+			} else {
+				fmt.Println("Congratulations! You defeated the computer")
+			}
+			break
+		}
 	}
 }
