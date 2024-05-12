@@ -1,6 +1,7 @@
 package computer
 
 import (
+	"fmt"
 	"math/rand"
 	"rock-paper-scissors/game"
 	"time"
@@ -45,9 +46,10 @@ func (p *ComputerPlayer) GetNextMove() game.Move {
 	switch p.GetPrevBattleResult() {
 	case "win":
 		return game.BeatMove(p.GetPrevMove())
-	case "lose":
+	case "lost":
 		return game.BeatMove(p.GetPrevHumanMove())
 	default:
+		fmt.Println("In default")
 		r := rand.New(rand.NewSource(time.Now().Unix()))
 		return game.Move(game.ValidMoves[r.Intn(len(game.ValidMoves))])
 	}

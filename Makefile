@@ -1,7 +1,7 @@
 .PHONY: test start
 
 test:
-	go test -v ./
+	go test -v ./...
   
 start:
 	go run main.go
